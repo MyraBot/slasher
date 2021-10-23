@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val slasherVersion: String by project
+val diskordVersion: String by project
 val kotlinxVersion: String by project
 
 plugins {
@@ -19,13 +19,13 @@ repositories {
 dependencies {
     val kotlinxGroup = "org.jetbrains.kotlinx"
 
-    compileOnly(group = "com.github.myraBot", name = "Diskord", version = slasherVersion) // Discord Wrapper
+    compileOnly(group = "com.github.myraBot", name = "Diskord", version = diskordVersion) // Discord Wrapper
     compileOnly(kotlin("reflect"))
     compileOnly(group = "org.reflections", name = "reflections", version = "0.10")
     compileOnly(group = kotlinxGroup, name = "kotlinx-coroutines-core")
     compileOnly(group = kotlinxGroup, name = "kotlinx-coroutines-jdk8", version = kotlinxVersion)
 
-    testImplementation(group = "com.github.myraBot", name = "Diskord", version = slasherVersion) // Discord Wrapper
+    testImplementation(group = "com.github.myraBot", name = "Diskord", version = diskordVersion) // Discord Wrapper
     testImplementation(kotlin("reflect"))
     testImplementation(group = "org.reflections", name = "reflections", version = "0.10")
     testImplementation(group = kotlinxGroup, name = "kotlinx-coroutines-core")
