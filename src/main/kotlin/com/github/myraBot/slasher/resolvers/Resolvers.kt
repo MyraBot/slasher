@@ -1,11 +1,10 @@
 package com.github.myraBot.slasher.resolvers
 
 import com.github.m5rian.discord.objects.entities.User
-import com.github.myraBot.slasher.CommandContext
-import com.github.myraBot.slasher.MultiWord
-import com.github.m5rian.kommandHandler.resolvers.impl.*
 import com.github.myraBot.diskord.common.entities.Member
 import com.github.myraBot.diskord.common.entities.channel.TextChannel
+import com.github.myraBot.slasher.CommandContext
+import com.github.myraBot.slasher.MultiWord
 import com.github.myraBot.slasher.resolvers.impl.*
 import kotlin.reflect.KClassifier
 import kotlin.reflect.KParameter
