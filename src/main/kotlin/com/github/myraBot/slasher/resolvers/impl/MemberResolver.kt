@@ -1,10 +1,10 @@
 package com.github.myraBot.slasher.resolvers.impl
 
+import com.github.myraBot.diskord.common.entities.Member
 import com.github.myraBot.slasher.CommandContext
 import com.github.myraBot.slasher.DiscordRegex
 import com.github.myraBot.slasher.resolvers.Arg
 import com.github.myraBot.slasher.resolvers.Resolver
-import com.github.myraBot.diskord.common.entities.Member
 
 class MemberResolver : Resolver<Member> {
     override suspend fun resolveIfNotNull(ctx: CommandContext, parameter: String): Arg<Member> {

@@ -1,10 +1,11 @@
 package com.github.myraBot.slasher.resolvers.impl
 
+import com.github.myraBot.diskord.common.entities.channel.TextChannel
+import com.github.myraBot.diskord.rest.behaviors.getChannel
 import com.github.myraBot.slasher.CommandContext
 import com.github.myraBot.slasher.DiscordRegex
 import com.github.myraBot.slasher.resolvers.Arg
 import com.github.myraBot.slasher.resolvers.Resolver
-import com.github.myraBot.diskord.common.entities.channel.TextChannel
 
 class TextChannelResolver : Resolver<TextChannel> {
     override suspend fun resolveIfNotNull(ctx: CommandContext, parameter: String): Arg<TextChannel> {

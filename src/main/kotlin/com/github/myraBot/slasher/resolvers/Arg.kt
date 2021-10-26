@@ -1,8 +1,8 @@
 package com.github.myraBot.slasher.resolvers
 
-import com.github.m5rian.discord.objects.entities.User
-import com.github.myraBot.slasher.CommandContext
 import com.github.myraBot.diskord.common.entities.Member
+import com.github.myraBot.diskord.common.entities.User
+import com.github.myraBot.slasher.CommandContext
 
 data class Arg<T>(internal val _value: T?, val found: Boolean, val given: Boolean, internal val ctx: CommandContext) {
     val value: T get() = _value!!

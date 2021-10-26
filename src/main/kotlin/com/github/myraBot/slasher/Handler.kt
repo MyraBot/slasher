@@ -2,13 +2,13 @@
 
 package com.github.myraBot.slasher
 
-import com.github.myraBot.slasher.commandInfo.Command
-import com.github.myraBot.slasher.resolvers.Arg
-import com.github.myraBot.slasher.resolvers.Resolvers
 import com.github.myraBot.diskord.common.entities.Guild
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.MessageCreateEvent
+import com.github.myraBot.slasher.commandInfo.Command
+import com.github.myraBot.slasher.resolvers.Arg
+import com.github.myraBot.slasher.resolvers.Resolvers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.reflections.Reflections
@@ -31,8 +31,8 @@ class Handler : EventListener() {
     }
 
     private suspend fun handle(event: MessageCreateEvent) {
-        if (ignoreSystemMessages && (event.message.isWebhook || event.user.system)) return
-        if (ignoreBotMessages && event.user.bot) return
+        if (ignoreSystemMessages && (event.message.isWebhook || event.isSystem)) return
+        if (ignoreBotMessages && event.user.isBot) return
         if (event.member == null) {
             //TODO Handle null members
             throw Exception("The member is null... Sorry lol")
