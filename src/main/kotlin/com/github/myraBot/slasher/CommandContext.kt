@@ -1,6 +1,10 @@
 package com.github.myraBot.slasher
 
-import com.github.myraBot.diskord.common.entities.*
+import com.github.myraBot.diskord.Diskord
+import com.github.myraBot.diskord.common.entities.Guild
+import com.github.myraBot.diskord.common.entities.Member
+import com.github.myraBot.diskord.common.entities.Message
+import com.github.myraBot.diskord.common.entities.User
 import com.github.myraBot.diskord.common.entities.channel.MessageChannel
 import com.github.myraBot.diskord.gateway.listeners.impl.MessageCreateEvent
 import com.github.myraBot.slasher.commandInfo.Data
