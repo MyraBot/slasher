@@ -28,6 +28,7 @@ class CommandContext internal constructor(
     val method: KFunction<*> = _method
 
     val diskord: Diskord = Diskord
+    suspend fun getBotMember() = event.guild!!.getBotMember()
 
     val guild: Guild = event.guild!!
     val member: Member = _member
