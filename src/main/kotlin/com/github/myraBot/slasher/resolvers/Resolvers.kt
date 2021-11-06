@@ -1,8 +1,8 @@
 package com.github.myraBot.slasher.resolvers
 
-import com.github.myraBot.diskord.common.entities.Member
 import com.github.myraBot.diskord.common.entities.User
 import com.github.myraBot.diskord.common.entities.channel.TextChannel
+import com.github.myraBot.diskord.common.entities.guild.Member
 import com.github.myraBot.slasher.CommandContext
 import com.github.myraBot.slasher.MultiWord
 import com.github.myraBot.slasher.resolvers.impl.*

@@ -2,7 +2,7 @@
 
 package com.github.myraBot.slasher
 
-import com.github.myraBot.diskord.common.entities.Guild
+import com.github.myraBot.diskord.common.entities.guild.Guild
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.MessageCreateEvent

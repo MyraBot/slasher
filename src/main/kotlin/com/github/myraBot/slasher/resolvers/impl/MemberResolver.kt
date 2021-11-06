@@ -1,6 +1,6 @@
 package com.github.myraBot.slasher.resolvers.impl
 
-import com.github.myraBot.diskord.common.entities.Member
+import com.github.myraBot.diskord.common.entities.guild.Member
 import com.github.myraBot.slasher.CommandContext
 import com.github.myraBot.slasher.DiscordRegex
 import com.github.myraBot.slasher.resolvers.Arg
