@@ -1,5 +1,6 @@
 package com.github.myraBot.slasher.resolvers.impl
 
+import com.github.myraBot.diskord.Diskord
 import com.github.myraBot.diskord.common.entities.User
 import com.github.myraBot.slasher.CommandContext
 import com.github.myraBot.slasher.DiscordRegex
@@ -11,7 +12,7 @@ class UserResolver : Resolver<User> {
         return when {
             parameter.matches(DiscordRegex.id) || parameter.matches(DiscordRegex.userMention) -> {
                 val id = parameter.removePrefix("<@").removePrefix("!").removeSuffix(">")
-                Arg.ofNullable(ctx.diskord.getUser(id), ctx)
+                Arg.ofNullable(Diskord.getUser(id), ctx)
             }
             // TODO
             /*
