@@ -2,6 +2,7 @@
 
 package com.github.myraBot.slasher
 
+import com.github.m5rian.discord.trace
 import com.github.myraBot.diskord.common.entities.guild.SimpleGuild
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
@@ -91,7 +92,9 @@ class Handler : EventListener() {
     private fun loadCommand(method: KFunction<*>): CommandImpl? {
         if (method.valueParameters.firstOrNull()?.type?.classifier != CommandContext::class) return null
         val commandInfo = method.findAnnotation<Command>() ?: return null
-        return CommandImpl(commandInfo.name, commandInfo.aliases, commandInfo.args, commandInfo.description, method)
+        return CommandImpl(commandInfo.name, commandInfo.aliases, commandInfo.args, commandInfo.description, method).also {
+            trace(this::class) { "Registered command: ${commandInfo.name}" }
+        }
     }
 }
 
