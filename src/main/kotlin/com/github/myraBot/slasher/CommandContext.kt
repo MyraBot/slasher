@@ -5,7 +5,7 @@ import com.github.myraBot.diskord.common.entities.channel.MessageChannel
 import com.github.myraBot.diskord.common.entities.guild.Member
 import com.github.myraBot.diskord.common.entities.guild.SimpleGuild
 import com.github.myraBot.diskord.common.entities.message.Message
-import com.github.myraBot.diskord.gateway.listeners.impl.MessageCreateEvent
+import com.github.myraBot.diskord.gateway.listeners.impl.message.MessageCreateEvent
 import com.github.myraBot.slasher.commandInfo.Data
 import kotlin.reflect.KFunction
 

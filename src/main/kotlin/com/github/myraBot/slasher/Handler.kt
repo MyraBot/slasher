@@ -5,7 +5,7 @@ package com.github.myraBot.slasher
 import com.github.myraBot.diskord.common.entities.guild.SimpleGuild
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
-import com.github.myraBot.diskord.gateway.listeners.impl.MessageCreateEvent
+import com.github.myraBot.diskord.gateway.listeners.impl.message.MessageCreateEvent
 import com.github.myraBot.slasher.commandInfo.Command
 import com.github.myraBot.slasher.resolvers.Arg
 import com.github.myraBot.slasher.resolvers.Resolvers
