@@ -1,9 +1,9 @@
 package com.github.myraBot.slasher
 
 import com.github.myraBot.diskord.common.entities.User
-import com.github.myraBot.diskord.common.entities.channel.MessageChannel
+import com.github.myraBot.diskord.common.entities.channel.TextChannel
+import com.github.myraBot.diskord.common.entities.guild.Guild
 import com.github.myraBot.diskord.common.entities.guild.Member
-import com.github.myraBot.diskord.common.entities.guild.SimpleGuild
 import com.github.myraBot.diskord.common.entities.message.Message
 import com.github.myraBot.diskord.gateway.listeners.impl.message.MessageCreateEvent
 import com.github.myraBot.slasher.commandInfo.Data
@@ -26,11 +26,11 @@ class CommandContext internal constructor(
     val executor: String = _executor
     val method: KFunction<*> = _method
 
-    val channel: MessageChannel = event.channel
+    val channel: TextChannel = event.channel
     val message: Message = event.message
     val user: User = event.user
 
-    val guild: SimpleGuild = event.guild!!
+    val guild: Guild = event.guild
     val member: Member = _member
-    suspend fun getBotMember() = event.guild!!.getBotMember()
+    suspend fun getBotMember() = event.guild.getBotMember()
 }

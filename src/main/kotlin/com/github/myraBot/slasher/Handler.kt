@@ -3,7 +3,7 @@
 package com.github.myraBot.slasher
 
 import com.github.m5rian.discord.trace
-import com.github.myraBot.diskord.common.entities.guild.SimpleGuild
+import com.github.myraBot.diskord.common.entities.guild.Guild
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.message.MessageCreateEvent
@@ -22,7 +22,7 @@ class Handler : EventListener() {
     lateinit var coroutineScope: CoroutineScope
     var commandPackage: String? = null
     var defaultPrefixes: MutableList<String> = mutableListOf()
-    var guildPrefixes: (suspend (SimpleGuild) -> MutableList<String>)? = null
+    var guildPrefixes: (suspend (Guild) -> MutableList<String>)? = null
     var ignoreSystemMessages: Boolean = false
     var ignoreBotMessages: Boolean = false
 
@@ -34,7 +34,7 @@ class Handler : EventListener() {
     private suspend fun handle(event: MessageCreateEvent) {
         if (ignoreSystemMessages && (event.message.isWebhook || event.isSystem)) return
         if (ignoreBotMessages && event.user.isBot) return
-        val guild = event.guild!!
+        val guild = event.guild
 
         val prefixes = guildPrefixes?.invoke(guild) ?: defaultPrefixes
         val prefix: String = prefixes.firstOrNull { event.message.content.startsWith(it) } ?: return
