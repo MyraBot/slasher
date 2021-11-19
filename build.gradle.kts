@@ -10,7 +10,7 @@ plugins {
 
 group = "com.github.myraBot"
 val id = "Slasher"
-version = "0.11"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -22,8 +22,11 @@ dependencies {
     compileOnly(group = "com.github.myraBot", name = "Diskord", version = diskordVersion) // Discord Wrapper
     compileOnly(kotlin("reflect"))
     compileOnly(group = "org.reflections", name = "reflections", version = "0.10")
-    compileOnly(group = kotlinxGroup, name = "kotlinx-coroutines-core")
+    // Coroutines
+    compileOnly(group = kotlinxGroup, name = "kotlinx-coroutines-core", version = kotlinxVersion)
     compileOnly(group = kotlinxGroup, name = "kotlinx-coroutines-jdk8", version = kotlinxVersion)
+    // JSON serialization
+    compileOnly(group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.3.0") // Serializer
 
     testImplementation(group = "com.github.myraBot", name = "Diskord", version = diskordVersion) // Discord Wrapper
     testImplementation(kotlin("reflect"))

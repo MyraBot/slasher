@@ -1,36 +1,30 @@
 package com.github.myraBot.slasher
 
 import com.github.myraBot.diskord.common.entities.User
+import com.github.myraBot.diskord.common.entities.applicationCommands.Interaction
 import com.github.myraBot.diskord.common.entities.channel.TextChannel
 import com.github.myraBot.diskord.common.entities.guild.Guild
 import com.github.myraBot.diskord.common.entities.guild.Member
-import com.github.myraBot.diskord.common.entities.message.Message
-import com.github.myraBot.diskord.gateway.listeners.impl.message.MessageCreateEvent
-import com.github.myraBot.slasher.commandInfo.Data
+import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
+import com.github.myraBot.diskord.rest.behaviors.InteractionCreateBehavior
 import kotlin.reflect.KFunction
 
 @Suppress("unused")
 class CommandContext internal constructor(
-        _event: MessageCreateEvent,
+        _event: SlashCommandEvent,
         _method: KFunction<*>,
         _command: CommandImpl,
-        _executor: String,
-        _member: Member,
-) {
+        override val interaction: Interaction = _event.interaction
+) : InteractionCreateBehavior {
     @Suppress("MemberVisibilityCanBePrivate")
-    val event: MessageCreateEvent = _event
+    val event: SlashCommandEvent = _event
     val name: String = _command.name
-    val aliases: Array<String> = _command.aliases
-    var args: Array<Data> = _command.args
-    val description: String = _command.description
-    val executor: String = _executor
     val method: KFunction<*> = _method
 
     val channel: TextChannel = event.channel
-    val message: Message = event.message
-    val user: User = event.user
+    val user: User = event.member.user
 
     val guild: Guild = event.guild
-    val member: Member = _member
+    val member: Member = event.member
     suspend fun getBotMember() = event.guild.getBotMember()
 }
