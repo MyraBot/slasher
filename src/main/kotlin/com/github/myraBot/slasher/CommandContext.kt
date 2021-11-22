@@ -11,15 +11,11 @@ import kotlin.reflect.KFunction
 
 @Suppress("unused")
 class CommandContext internal constructor(
-        _event: SlashCommandEvent,
-        _method: KFunction<*>,
-        _command: CommandImpl,
-        override val interaction: Interaction = _event.interaction
+        val event: SlashCommandEvent,
+        val method: KFunction<*>,
+        private val command: CommandImpl,
 ) : InteractionCreateBehavior {
-    @Suppress("MemberVisibilityCanBePrivate")
-    val event: SlashCommandEvent = _event
-    val name: String = _command.name
-    val method: KFunction<*> = _method
+    override val interaction: Interaction = event.interaction
 
     val channel: TextChannel = event.channel
     val user: User = event.member.user
