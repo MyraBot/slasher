@@ -2,6 +2,7 @@ package com.github.myraBot.slasher
 
 import com.github.myraBot.diskord.common.entities.User
 import com.github.myraBot.diskord.common.entities.applicationCommands.Interaction
+import com.github.myraBot.diskord.common.entities.applicationCommands.slashCommands.SlashCommand
 import com.github.myraBot.diskord.common.entities.channel.TextChannel
 import com.github.myraBot.diskord.common.entities.guild.Guild
 import com.github.myraBot.diskord.common.entities.guild.Member
@@ -13,8 +14,9 @@ import kotlin.reflect.KFunction
 class CommandContext internal constructor(
         val event: SlashCommandEvent,
         val method: KFunction<*>,
-        private val command: CommandImpl,
+        private val _command: CommandImpl,
 ) : InteractionCreateBehavior {
+    val command: SlashCommand = event.command
     override val interaction: Interaction = event.interaction
 
     val channel: TextChannel = event.channel
