@@ -2,13 +2,13 @@
 
 package com.github.myraBot.slasher
 
-import com.github.m5rian.discord.trace
 import com.github.myraBot.diskord.common.entities.Channel
 import com.github.myraBot.diskord.common.entities.Role
 import com.github.myraBot.diskord.common.entities.User
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
+import com.github.myraBot.diskord.utilities.logging.trace
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.reflections.Reflections
