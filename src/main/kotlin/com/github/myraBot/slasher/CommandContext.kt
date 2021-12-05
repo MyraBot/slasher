@@ -16,8 +16,8 @@ class CommandContext internal constructor(
         val method: KFunction<*>,
         private val _command: CommandImpl,
 ) : InteractionCreateBehavior {
-    val command: SlashCommand = event.command
     override val interaction: Interaction = event.interaction
+    val command: SlashCommand = event.command
 
     val channel: TextChannel = event.channel
     val user: User = event.member.user
