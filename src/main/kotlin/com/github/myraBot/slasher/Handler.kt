@@ -5,6 +5,7 @@ package com.github.myraBot.slasher
 import com.github.myraBot.diskord.common.entities.Channel
 import com.github.myraBot.diskord.common.entities.Role
 import com.github.myraBot.diskord.common.entities.User
+import com.github.myraBot.diskord.common.entities.guild.Member
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
@@ -52,6 +53,7 @@ class Handler : EventListener() {
         Int::class -> event.getOption<Int>(name)
         Boolean::class -> event.getOption<Boolean>(name)
         User::class -> event.getOption<User>(name)
+        Member::class -> event.getOption<Member>(name)
         Channel::class -> event.getOption<Channel>(name)
         Role::class -> event.getOption<Role>(name)
         Unit::class -> event.getOption<String>(name)
