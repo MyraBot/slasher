@@ -10,7 +10,7 @@ plugins {
 
 group = "com.github.myraBot"
 val id = "Slasher"
-version = "1.4"
+version = "1.5"
 
 repositories {
     mavenCentral()
