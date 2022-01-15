@@ -8,6 +8,7 @@ import com.github.myraBot.diskord.common.entities.guild.Guild
 import com.github.myraBot.diskord.common.entities.guild.Member
 import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
 import com.github.myraBot.diskord.rest.behaviors.InteractionCreateBehavior
+import kotlinx.coroutines.runBlocking
 import kotlin.reflect.KFunction
 
 @Suppress("unused")
@@ -19,10 +20,10 @@ class CommandContext internal constructor(
     override val interaction: Interaction = event.interaction
     val command: SlashCommand = event.command
 
-    val channel: TextChannel = event.channel
+    val channel: TextChannel get() = runBlocking { event.channel.awaitNonNull() }
     val user: User = event.member.user
 
-    val guild: Guild = event.guild
+    val guild: Guild get() = runBlocking { event.guild.awaitNonNull() }
     val member: Member = event.member
-    suspend fun getBotMember() = event.guild.getBotMember()
+    val botMember: Member get() = runBlocking { guild.getBotMember().awaitNonNull() }
 }

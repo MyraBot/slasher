@@ -2,14 +2,14 @@
 
 package com.github.myraBot.slasher
 
-import com.github.myraBot.diskord.common.entities.Channel
 import com.github.myraBot.diskord.common.entities.Role
 import com.github.myraBot.diskord.common.entities.User
+import com.github.myraBot.diskord.common.entities.channel.ChannelData
 import com.github.myraBot.diskord.common.entities.guild.Member
+import com.github.myraBot.diskord.common.utilities.logging.trace
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
-import com.github.myraBot.diskord.utilities.logging.trace
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.reflections.Reflections
@@ -54,7 +54,7 @@ class Handler : EventListener() {
         Boolean::class -> event.getOption<Boolean>(name)
         User::class -> event.getOption<User>(name)
         Member::class -> event.getOption<Member>(name)
-        Channel::class -> event.getOption<Channel>(name)
+        ChannelData::class -> event.getOption<ChannelData>(name)
         Role::class -> event.getOption<Role>(name)
         Unit::class -> event.getOption<String>(name)
         Long::class -> event.getOption<Long>(name)
@@ -62,7 +62,7 @@ class Handler : EventListener() {
     }
 
 
-    fun loadCogs() {
+    suspend fun loadCogs() {
         if (this.commandPackage == null) throw IllegalStateException("Command package is not set!")
         if (!this::coroutineScope.isInitialized) throw IllegalStateException("No coroutine scope is set!")
 
@@ -76,13 +76,13 @@ class Handler : EventListener() {
             }
     }
 
-    private fun loadCommands(cog: Cog) {
+    private suspend fun loadCommands(cog: Cog) {
         cog::class.functions.filter { it.hasAnnotation<Command>() }
             .mapNotNull { loadCommand(it) }
             .let { cog.commands.addAll(it) }
     }
 
-    private fun loadCommand(method: KFunction<*>): CommandImpl? {
+    private suspend fun loadCommand(method: KFunction<*>): CommandImpl? {
         if (method.valueParameters.firstOrNull()?.type?.classifier != CommandContext::class) return null
         val commandInfo = method.findAnnotation<Command>() ?: return null
         return CommandImpl(commandInfo.name, method).also {
