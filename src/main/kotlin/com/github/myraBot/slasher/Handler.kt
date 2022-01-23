@@ -4,6 +4,7 @@ package com.github.myraBot.slasher
 
 import com.github.myraBot.diskord.common.entities.Role
 import com.github.myraBot.diskord.common.entities.User
+import com.github.myraBot.diskord.common.entities.applicationCommands.slashCommands.SlashCommandOptionType
 import com.github.myraBot.diskord.common.entities.channel.ChannelData
 import com.github.myraBot.diskord.common.entities.guild.Member
 import com.github.myraBot.diskord.common.utilities.logging.trace
@@ -29,9 +30,17 @@ class Handler : EventListener() {
     }
 
     private suspend fun handle(event: SlashCommandEvent) {
+        val name = StringBuilder(event.command.name).apply {
+            event.command.options.forEach {
+                if (it.type == SlashCommandOptionType.SUB_COMMAND || it.type == SlashCommandOptionType.SUB_COMMAND_GROUP) {
+                    this.append(" ${it.name}")
+                }
+            }
+        }.toString()
+
         this.cogs
             .flatMap { it.commands }
-            .filter { it.name == event.command.name }
+            .filter { it.name == name }
             .forEach { command ->
                 coroutineScope.launch {
                     val cog: Cog = this@Handler.cogs.first { command in it.commands }
