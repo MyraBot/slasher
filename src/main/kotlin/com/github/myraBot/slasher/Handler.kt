@@ -11,8 +11,6 @@ import com.github.myraBot.diskord.common.utilities.logging.trace
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import org.reflections.Reflections
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
@@ -20,14 +18,10 @@ import kotlin.reflect.full.*
 
 class Handler : EventListener() {
     private val cogs: MutableList<Cog> = mutableListOf()
-
-    lateinit var coroutineScope: CoroutineScope
     var commandPackage: String? = null
 
     @ListenTo(SlashCommandEvent::class)
-    fun onMessage(event: SlashCommandEvent) {
-        coroutineScope.launch { handle(event) }
-    }
+    suspend fun onMessage(event: SlashCommandEvent) = handle(event)
 
     private suspend fun handle(event: SlashCommandEvent) {
         val name = StringBuilder(event.command.name).apply {
@@ -42,18 +36,16 @@ class Handler : EventListener() {
             .flatMap { it.commands }
             .filter { it.name == name }
             .forEach { command ->
-                coroutineScope.launch {
-                    val cog: Cog = this@Handler.cogs.first { command in it.commands }
-                    val args: List<Any?> = command.method.valueParameters
-                        .subList(1, command.method.valueParameters.size) // Don't resolve CommandContext parameter
-                        .map { param ->
-                            val option = event.command.options.firstOrNull { it.name == param.name } ?: return@map null
-                            val klass = param.type.classifier as KClass<*>
-                            resolveParam(klass, option.name, event)
-                        }
+                val cog: Cog = this@Handler.cogs.first { command in it.commands }
+                val args: List<Any?> = command.method.valueParameters
+                    .subList(1, command.method.valueParameters.size) // Don't resolve CommandContext parameter
+                    .map { param ->
+                        val option = event.command.options.firstOrNull { it.name == param.name } ?: return@map null
+                        val klass = param.type.classifier as KClass<*>
+                        resolveParam(klass, option.name, event)
+                    }
 
-                    command.method.callSuspend(cog, CommandContext(event, command.method, command), *args.toTypedArray())
-                }
+                command.method.callSuspend(cog, CommandContext(event, command.method, command), *args.toTypedArray())
             }
     }
 
@@ -73,7 +65,6 @@ class Handler : EventListener() {
 
     suspend fun loadCogs() {
         if (this.commandPackage == null) throw IllegalStateException("Command package is not set!")
-        if (!this::coroutineScope.isInitialized) throw IllegalStateException("No coroutine scope is set!")
 
         Reflections(commandPackage).getSubTypesOf(Cog::class.java)
             .filter { !it.isInterface }
