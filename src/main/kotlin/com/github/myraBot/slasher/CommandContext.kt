@@ -21,9 +21,9 @@ class CommandContext internal constructor(
     val command: SlashCommand = event.command
 
     val channel: TextChannel get() = runBlocking { event.channel.awaitNonNull() }
-    val user: User = event.member.user
+    val user: User = event.member!!.user //TODO get uesr directly
 
     val guild: Guild get() = runBlocking { event.guild.awaitNonNull() }
-    val member: Member = event.member
+    val member: Member = event.member!!
     val botMember: Member get() = runBlocking { guild.getBotMember().awaitNonNull() }
 }
