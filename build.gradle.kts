@@ -14,7 +14,12 @@ version = "1.7"
 
 repositories {
     mavenCentral()
-    maven(url = "https://m5rian.jfrog.io/artifactory/java")
+    maven(url = "https://systems.myra.bot/releases/") {
+        credentials {
+            username = System.getenv("REPO_NAME")
+            password = System.getenv("REPO_SECRET")
+        }
+    }
 }
 dependencies {
     val kotlinxGroup = "org.jetbrains.kotlinx"
@@ -43,25 +48,22 @@ val sourcesJar by tasks.registering(Jar::class) {
 
 publishing {
     repositories {
-        maven {
-            name = "jfrog"
-            url = uri("https://m5rian.jfrog.io/artifactory/java")
-            credentials {
-                username = System.getenv("JFROG_USERNAME")
-                password = System.getenv("JFROG_PASSWORD")
+        publications {
+            create<MavenPublication>("repo") {
+                group = project.group as String
+                version = project.version as String
+                artifactId = id
+                from(components["java"])
             }
         }
-    }
-
-    publications {
-        create<MavenPublication>("jfrog") {
-            from(components["java"])
-
-            group = project.group as String
-            version = project.version as String
-            artifactId = id
-
-            artifact(sourcesJar)
+        maven {
+            url = uri("https://systems.myra.bot/releases/")
+            name = "repo"
+            credentials {
+                username = System.getenv("REPO_NAME")
+                password = System.getenv("REPO_SECRET")
+            }
+            authentication { create<BasicAuthentication>("basic") }
         }
     }
 }
