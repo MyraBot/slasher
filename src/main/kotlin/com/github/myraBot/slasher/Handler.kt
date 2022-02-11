@@ -7,7 +7,7 @@ import com.github.myraBot.diskord.common.entities.User
 import com.github.myraBot.diskord.common.entities.applicationCommands.slashCommands.SlashCommandOptionType
 import com.github.myraBot.diskord.common.entities.channel.ChannelData
 import com.github.myraBot.diskord.common.entities.guild.Member
-import com.github.myraBot.diskord.common.utilities.logging.trace
+import com.github.myraBot.diskord.common.utilities.trace
 import com.github.myraBot.diskord.gateway.listeners.EventListener
 import com.github.myraBot.diskord.gateway.listeners.ListenTo
 import com.github.myraBot.diskord.gateway.listeners.impl.interactions.SlashCommandEvent
@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.*
 
-class Handler : EventListener() {
+class Handler : EventListener {
     private val cogs: MutableList<Cog> = mutableListOf()
     var commandPackage: String? = null
 
@@ -63,7 +63,7 @@ class Handler : EventListener() {
     }
 
 
-    suspend fun loadCogs() {
+    fun loadCogs() {
         if (this.commandPackage == null) throw IllegalStateException("Command package is not set!")
 
         Reflections(commandPackage).getSubTypesOf(Cog::class.java)
@@ -76,13 +76,13 @@ class Handler : EventListener() {
             }
     }
 
-    private suspend fun loadCommands(cog: Cog) {
+    private fun loadCommands(cog: Cog) {
         cog::class.functions.filter { it.hasAnnotation<Command>() }
             .mapNotNull { loadCommand(it) }
             .let { cog.commands.addAll(it) }
     }
 
-    private suspend fun loadCommand(method: KFunction<*>): CommandImpl? {
+    private fun loadCommand(method: KFunction<*>): CommandImpl? {
         if (method.valueParameters.firstOrNull()?.type?.classifier != CommandContext::class) return null
         val commandInfo = method.findAnnotation<Command>() ?: return null
         return CommandImpl(commandInfo.name, method).also {
