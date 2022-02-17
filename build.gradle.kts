@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val kommonsVersion: String by project
 val diskordVersion: String by project
 val kotlinxVersion: String by project
 
@@ -10,7 +11,7 @@ plugins {
 
 group = "com.github.myraBot"
 val id = "Slasher"
-version = "1.9"
+version = "1.10"
 
 repositories {
     mavenCentral()
@@ -23,6 +24,8 @@ repositories {
 }
 dependencies {
     val kotlinxGroup = "org.jetbrains.kotlinx"
+
+    compileOnly("bot.myra:kommons:$kommonsVersion")
 
     compileOnly(group = "com.github.myraBot", name = "Diskord", version = diskordVersion) // Discord Wrapper
     compileOnly(kotlin("reflect"))
