@@ -42,23 +42,23 @@ class Handler : EventListener {
                     .map { param ->
                         val option = event.command.options.firstOrNull { it.name == param.name } ?: return@map null
                         val klass = param.type.classifier as KClass<*>
-                        resolveParam(klass, option.name, event)
+                        resolveParam(klass.java, option.name, event)
                     }
 
                 command.method.callSuspend(cog, CommandContext(event.interaction, command.method, command), *args.toTypedArray())
             }
     }
 
-    private fun resolveParam(klass: KClass<*>, name: String, event: GuildSlashCommandEvent): Any? = when (klass) {
-        String::class -> event.getOption<String>(name)
-        Int::class -> event.getOption<Int>(name)
-        Boolean::class -> event.getOption<Boolean>(name)
-        User::class -> event.getOption<User>(name)
-        Member::class -> event.getOption<Member>(name)
-        ChannelData::class -> event.getOption<ChannelData>(name)
-        Role::class -> event.getOption<Role>(name)
-        Unit::class -> event.getOption<String>(name)
-        Long::class -> event.getOption<Long>(name)
+    private fun resolveParam(klass: Class<*>, name: String, event: GuildSlashCommandEvent): Any? = when (klass) {
+        String::class.java -> event.getOption<String>(name)
+        Int::class.java -> event.getOption<Int>(name)
+        Boolean::class.java -> event.getOption<Boolean>(name)
+        User::class.java -> event.getOption<User>(name)
+        Member::class.java -> event.getOption<Member>(name)
+        ChannelData::class.java -> event.getOption<ChannelData>(name)
+        Role::class.java -> event.getOption<Role>(name)
+        Unit::class.java -> event.getOption<String>(name)
+        Long::class.java -> event.getOption<Long>(name)
         else -> throw IllegalStateException("Unexpected option type")
     }
 
