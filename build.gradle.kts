@@ -36,6 +36,7 @@ dependencies {
     // JSON serialization
     compileOnly(group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.3.0") // Serializer
 
+    testImplementation("bot.myra:kommons:$kommonsVersion")
     testImplementation(group = "com.github.myraBot", name = "Diskord", version = diskordVersion) // Discord Wrapper
     testImplementation(kotlin("reflect"))
     testImplementation(group = "org.reflections", name = "reflections", version = "0.10")
