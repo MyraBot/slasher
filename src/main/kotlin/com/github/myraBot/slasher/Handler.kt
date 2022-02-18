@@ -40,7 +40,7 @@ class Handler : EventListener {
                 val args: List<Any?> = command.method.valueParameters
                     .subList(1, command.method.valueParameters.size) // Don't resolve CommandContext parameter
                     .map { param ->
-                        val option = event.command.options.firstOrNull { it.name == param.name } ?: return@map null
+                        val option = event.arguments.firstOrNull { it.name == param.name } ?: return@map null
                         val klass = param.type.classifier as KClass<*>
                         resolveParam(klass.java, option.name, event)
                     }
