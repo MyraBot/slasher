@@ -139,6 +139,22 @@ fun onBanCommand(ctx: CommandContext, member: User, reason: String) {
 }
 ```
 
+Though what if the reason argument is optional? To handle optional arguments, make the parameter nullable. There is no need to
+add a default value. If no reason argument was provided, the parameter would be null automatically.
+
+```kotlin
+@Command("ban")
+fun onBanCommand(ctx: CommandContext, member: User, reason: String?) {
+    if(reason == null) {
+        // No reason given
+    } else {
+        // A reason is given
+    }
+    
+    /* Continue handling ban */
+}
+```
+
 ### Command context
 
 The `CommandContext` is a replacement for the `GuildSlashCommandEvent`. Actually it is a `GuildSlashCommandEvent`, because
